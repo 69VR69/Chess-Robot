@@ -1,5 +1,6 @@
 from stockfish import Stockfish
-from chessnut import Chessnut
+
+stockfish = Stockfish('stockfish_15_win_x64_popcnt/stockfish_15_win_x64_popcnt/stockfish_15_x64_popcnt.exe')
 
 
 def compare(fen1, fen2):
@@ -23,7 +24,7 @@ def compare(fen1, fen2):
                     continue
                 else:
                     if s1[j] != "." or s2[j] != ".":
-                        move_played += str(chr(65 + j)) + str(8 - i)
+                        move_played += str(chr(97 + j)) + str(8 - i)
     return move_played
 
 
@@ -42,27 +43,27 @@ def stringify_fen(fen_part):
 
 
 def is_legal_move(fen, move):
-    result = False
-
     if len(move) != 4:
-        return result
+        print("Invalid move : not enough characters")
+        return False
 
     if (move[0] < 'A' or move[0] > 'H') or (move[2] < 'A' or move[2] > 'H'):
-        if(move[1] < '1' or move[1] > '8') or (move[3] < '1' or move[3] > '8'):
-            return result
+        if (move[1] < '1' or move[1] > '8') or (move[3] < '1' or move[3] > '8'):
+            print("Invalid move : invalid characters")
+            return False
 
-    chessnut = Chessnut()
-    chessnut.set_fen(fen)
-    result = chessnut.is_legal(move)
+    stockfish.set_fen_position(fen)
+    return stockfish.is_move_correct(move)
 
-    return result
 
-def detect_end_of_game(fen):
-    return {}
+def is_game_over():
+    if stockfish.does_current_engine_version_have_wdl_option():
+        return stockfish.get_wdl_stats() is None
+    else:
+        raise Exception("This Stockfish version does not support WDL option so we cannot detect end of game")
 
 
 def find_next_move(fen):
-    stockfish = Stockfish('stockfish_15_win_x64_popcnt/stockfish_15_win_x64_popcnt/stockfish_15_x64_popcnt.exe')
     stockfish.set_fen_position("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
     return stockfish.get_best_move()
 
@@ -72,12 +73,14 @@ def play_solo():
 
 
 if __name__ == '__main__':
-    print("")
+    print('')
+
+    stockfish.set_elo_rating(2000)
 
     fen1 = "qbrkbnrn/pppppppp/8/8/8/8/PPPPPPPP/QBRKBNRN w - - 0 1"
     fen2 = "qbrkbnrn/pppppppp/8/8/8/3P4/PPP1PPPP/QBRKBNRN b - - 0 1"
-    fen3 = "qbrkbnrn/ppppp1pp/5p2/8/8/3P4/PPP1PPPP/QBRKBNRN w - - 0 1"
-    move1 = compare(fen1, fen2)
-    print(move1)
-    print(is_legal_move(fen1, move1))
-    #print(compare(fen2, fen3))
+    stockfish.set_fen_position(fen1)
+    print(stockfish.get_board_visual())
+    move = compare(fen1, fen2)
+    print('is ' + move + ' a legal move : ' + str(is_legal_move(fen1, move)))
+    print('is the game over : ' + str(is_game_over()))
