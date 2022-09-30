@@ -1,26 +1,28 @@
 from stockfish import Stockfish
+from chessnut import Chessnut
 
 
 def compare(fen1, fen2):
     move_played = ""
 
-    lines1 = fen1.split(" ")[0].split("/", 8)
-    lines2 = fen2.split(" ")[0].split("/", 8)
+    splitted_fen1 = fen1.split(" ")
+    splitted_fen2 = fen2.split(" ")
 
-    for i in reversed(range(len(lines1))):
-        if lines1[i] == lines2[i]:
+    board1 = splitted_fen1[0].split("/", 8)
+    board2 = splitted_fen2[0].split("/", 8)
+
+    for i in reversed(range(len(board1))) if splitted_fen2[1].split(" ", 1)[0] != 'w' else range(len(board1)):
+        if board1[i] == board2[i]:
             continue
         else:
-            # print("line1: " + lines1[i])
-            # print("line2: " + lines2[i])
-            temp1 = stringify_fen(lines1[i])
-            temp2 = stringify_fen(lines2[i])
-            for j in range(len(temp1)):
-                if temp1[j] == temp2[j]:
+            s1 = stringify_fen(board1[i])
+            s2 = stringify_fen(board2[i])
+
+            for j in range(len(s1)):
+                if s1[j] == s2[j]:
                     continue
                 else:
-                    print("move: (" + str(chr(65 + j)) + "," + str(8-i)+")")
-                    if temp1[j] != "." or temp2[j] != ".":
+                    if s1[j] != "." or s2[j] != ".":
                         move_played += str(chr(65 + j)) + str(8 - i)
     return move_played
 
@@ -39,9 +41,21 @@ def stringify_fen(fen_part):
         return result
 
 
-def detect_not_legal_move(fen):
-    return {}
+def is_legal_move(fen, move):
+    result = False
 
+    if len(move) != 4:
+        return result
+
+    if (move[0] < 'A' or move[0] > 'H') or (move[2] < 'A' or move[2] > 'H'):
+        if(move[1] < '1' or move[1] > '8') or (move[3] < '1' or move[3] > '8'):
+            return result
+
+    chessnut = Chessnut()
+    chessnut.set_fen(fen)
+    result = chessnut.is_legal(move)
+
+    return result
 
 def detect_end_of_game(fen):
     return {}
@@ -63,6 +77,7 @@ if __name__ == '__main__':
     fen1 = "qbrkbnrn/pppppppp/8/8/8/8/PPPPPPPP/QBRKBNRN w - - 0 1"
     fen2 = "qbrkbnrn/pppppppp/8/8/8/3P4/PPP1PPPP/QBRKBNRN b - - 0 1"
     fen3 = "qbrkbnrn/ppppp1pp/5p2/8/8/3P4/PPP1PPPP/QBRKBNRN w - - 0 1"
-    print(compare(fen1, fen2))
-    print(compare(fen2, fen3))
-    print(compare(fen1, fen3))
+    move1 = compare(fen1, fen2)
+    print(move1)
+    print(is_legal_move(fen1, move1))
+    #print(compare(fen2, fen3))
