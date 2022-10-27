@@ -1,8 +1,10 @@
 from stockfish import Stockfish
 
 stockfish = Stockfish('stockfish_15_win_x64_popcnt/stockfish_15_win_x64_popcnt/stockfish_15_x64_popcnt.exe')
+listMoves = []
 
 
+# region FEN Manipulation
 def compare(fen1, fen2):
     move_played = ""
 
@@ -42,6 +44,9 @@ def stringify_fen(fen_part):
         return result
 
 
+# endregion FEN Manipulation
+
+# region Game Logic
 def is_legal_move(fen, move):
     if len(move) != 4:
         print("Invalid move : not enough characters")
@@ -64,14 +69,33 @@ def is_game_over():
 
 
 def find_next_move(fen):
-    stockfish.set_fen_position("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+    stockfish.set_fen_position(fen)
     return stockfish.get_best_move()
+
+
+# endregion Game Logic
+
+def get_previous_move(fen):
+    prev_move = compare(fen, stockfish.get_fen_position())
+    listMoves.append(prev_move)
+    return prev_move
+
+
+def get_next_move(fen):
+    next_move = find_next_move(fen)
+    listMoves.append(next_move)
+    return next_move
+
+
+def get_list_moves():
+    return listMoves
 
 
 def play_solo():
     return {}
 
 
+# region test
 if __name__ == '__main__':
     print('')
 
@@ -84,3 +108,4 @@ if __name__ == '__main__':
     move = compare(fen1, fen2)
     print('is ' + move + ' a legal move : ' + str(is_legal_move(fen1, move)))
     print('is the game over : ' + str(is_game_over()))
+# endregion test
