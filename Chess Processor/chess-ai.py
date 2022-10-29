@@ -3,6 +3,43 @@ from stockfish import Stockfish
 stockfish = Stockfish('stockfish_15_win_x64_popcnt/stockfish_15_win_x64_popcnt/stockfish_15_x64_popcnt.exe')
 listMoves = []
 
+pieces = {
+    "P": "Pawn",  # pion
+    "N": "Knight",  # cavalier
+    "B": "Bishop",  # fou
+    "R": "Rook",  # tour
+    "Q": "Queen",  # reine
+    "K": "King"  # roi
+}
+
+
+class Piece:
+    def __init__(self, name, position, color):
+        self.name = name
+        self.position = position
+        self.color = color
+
+    def __str__(self):
+        return self.name + " " + self.position + " " + self.color
+
+
+colorTurn = "w"
+castlingRights = "-"
+en_passant = "-"
+half_move_clock = 0
+full_move_number = 1
+
+listPieces = {
+    1: Piece("R", "a1", "w"), 2: Piece("N", "b1", "w"), 3: Piece("B", "c1", "w"), 4: Piece("Q", "d1", "w"),
+    5: Piece("K", "e1", "w"), 6: Piece("B", "f1", "w"), 7: Piece("N", "g1", "w"), 8: Piece("R", "h1", "w"),
+    9: Piece("P", "a2", "w"), 10: Piece("P", "b2", "w"), 11: Piece("P", "c2", "w"), 12: Piece("P", "d2", "w"),
+    13: Piece("P", "e2", "w"), 14: Piece("P", "f2", "w"), 15: Piece("P", "g2", "w"), 16: Piece("P", "h2", "w"),
+    17: Piece("P", "a7", "b"), 18: Piece("P", "b7", "b"), 19: Piece("P", "c7", "b"), 20: Piece("P", "d7", "b"),
+    21: Piece("P", "e7", "b"), 22: Piece("P", "f7", "b"), 23: Piece("P", "g7", "b"), 24: Piece("P", "h7", "b"),
+    25: Piece("R", "a8", "b"), 26: Piece("N", "b8", "b"), 27: Piece("B", "c8", "b"), 28: Piece("Q", "d8", "b"),
+    29: Piece("K", "e8", "b"), 30: Piece("B", "f8", "b"), 31: Piece("N", "g8", "b"), 32: Piece("R", "h8", "b")
+}
+
 
 # region FEN Manipulation
 def compare(fen1, fen2):
@@ -44,6 +81,72 @@ def stringify_fen(fen_part):
         return result
 
 
+def init_list_piece_from_fen(fen):
+    fen = fen.split(" ")
+    fen = fen[0].split("/")
+    for i in range(len(fen)):
+        for j in range(len(fen[i])):
+            if fen[i][j].isalpha():
+                listPieces[i + j] = Piece(fen[i][j], chr(97 + j) + str(8 - i), "w" if fen[i][j].isupper() else "b")
+
+
+def get_piece_id_from_position(position):
+    for key, value in listPieces.items():
+        if value.position == position:
+            return key
+    return None
+
+
+def get_piece_from_position(pos):
+    for key, piece in listPieces:
+        if piece.position == pos:
+            return piece
+    return None
+
+
+def update_list_pieces_from_move(move):
+    current_piece = get_piece_from_position(move[0:2])
+    removed_piece = None
+
+    if current_piece is None:
+        raise Exception("No piece found at position " + move[0:2])
+    else:
+        if get_piece_from_position(move[2:4]) is not None:
+            removed_piece = get_piece_from_position(move[2:4])
+            del listPieces[removed_piece]
+        current_piece.position = move[2:4]
+    return removed_piece
+
+
+def create_fen_from_list_pieces():
+    fen = ""
+    empty = 0
+
+    for i in range(8):
+        for j in range(8):
+            piece = get_piece_from_position(chr(97 + j) + str(8 - i))
+
+            if piece is None:
+                empty += 1
+            else:
+                if empty > 0:
+                    fen += str(empty)
+                    empty = 0
+                piece_name = piece.name
+                fen += piece_name.lower() if piece.color == "b" else piece_name.upper()
+
+        if i < 7:
+            if empty > 0:
+                fen += str(empty)
+                empty = 0
+            fen += "/"
+
+    fen += colorTurn + " " + castlingRights + " " + en_passant + " " + str(half_move_clock) + " " + str(
+        full_move_number)
+
+    return fen
+
+
 # endregion FEN Manipulation
 
 # region Game Logic
@@ -73,6 +176,61 @@ def find_next_move(fen):
     return stockfish.get_best_move()
 
 
+def detect_promotion(move):
+    if move[4:5] == "q":
+        promote_pawn(int(move[5:6]), "Q")
+    elif move[4:5] == "r":
+        promote_pawn(int(move[5:6]), "R")
+    elif move[4:5] == "b":
+        promote_pawn(int(move[5:6]), "B")
+    elif move[4:5] == "n":
+        promote_pawn(int(move[5:6]), "N")
+    elif move[4:5] == "k":
+        promote_pawn(int(move[5:6]), "K")
+    else:
+        return
+
+
+def promote_pawn(id, new_piece):
+    if new_piece not in pieces:
+        raise Exception("Invalid piece : " + new_piece)
+    else:
+        listPieces[id].name = new_piece
+
+
+def generate_message(fen, message):
+    prev_move = get_previous_move(fen)
+
+    if is_game_over():
+        return message + ';' + "Game over"
+
+    if not is_legal_move(fen, prev_move):
+        return message + ';' + "Illegal move detected : " + prev_move
+
+    return message
+
+
+def change_turn():
+    global colorTurn
+    colorTurn = "w" if colorTurn == "b" else "b"
+
+
+def get_castling_rights():  # TODO
+    return castlingRights
+
+
+def get_en_passant():  # TODO
+    return en_passant
+
+
+def get_half_move_clock():  # TODO
+    return half_move_clock
+
+
+def get_full_move_number():  # TODO
+    return full_move_number
+
+
 # endregion Game Logic
 
 def get_previous_move(fen):
@@ -91,6 +249,21 @@ def get_list_moves():
     return listMoves
 
 
+def play_turn(fen):
+    message = generate_message(fen, "")
+
+    if is_game_over():
+        return get_list_moves()
+
+    move = get_next_move(fen)
+    removed_piece = update_list_pieces_from_move(move)
+    detect_promotion(move)
+
+    piece_to_move = get_piece_from_position(move[0:2])
+
+    return piece_to_move, move, removed_piece, message
+
+
 def play_solo():
     return {}
 
@@ -105,7 +278,7 @@ if __name__ == '__main__':
     fen2 = "qbrkbnrn/pppppppp/8/8/8/3P4/PPP1PPPP/QBRKBNRN b - - 0 1"
     stockfish.set_fen_position(fen1)
     print(stockfish.get_board_visual())
-    move = compare(fen1, fen2)
-    print('is ' + move + ' a legal move : ' + str(is_legal_move(fen1, move)))
+    move_test = compare(fen1, fen2)
+    print('is ' + move_test + ' a legal move : ' + str(is_legal_move(fen1, move_test)))
     print('is the game over : ' + str(is_game_over()))
 # endregion test
