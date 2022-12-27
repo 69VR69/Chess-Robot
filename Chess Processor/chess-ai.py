@@ -163,6 +163,14 @@ def create_fen_from_list_pieces():
 # endregion FEN Manipulation
 
 # region Game Logic
+def get_pieces_from_type(type):
+    pieces = []
+    for key, value in listPieces.items():
+        if value.name == type:
+            pieces.append(value)
+    return pieces
+
+
 def is_legal_move(fen, move):
     if len(move) != 4:
         print("Invalid move : not enough characters in move (" + move + ")")
@@ -173,20 +181,11 @@ def is_legal_move(fen, move):
             print("Invalid move : invalid characters")
             return False
 
-    stockfish.set_fen_position(fen)
     return stockfish.is_move_correct(move)
 
 
 def is_game_over():
-    if stockfish.does_current_engine_version_have_wdl_option():
-        return stockfish.get_wdl_stats() is None
-    else:
-        raise Exception("This Stockfish version does not support WDL option so we cannot detect end of game")
-
-
-def find_next_move(fen):
-    stockfish.set_fen_position(fen)
-    return stockfish.get_best_move()
+    return stockfish.get_wdl_stats() is None
 
 
 def detect_promotion(move):
@@ -212,9 +211,6 @@ def promote_pawn(id, new_piece):
 def generate_message(fen, message):
     prev_move = get_previous_move(fen, False)
 
-    if is_game_over():
-        return message + ';' + "Game over"
-
     if prev_move != '' and not is_legal_move(fen, prev_move):
         return message + ';' + "Illegal move detected : " + prev_move
 
@@ -226,12 +222,45 @@ def change_turn():
     colorTurn = "w" if colorTurn == "b" else "b"
 
 
-def get_castling_rights():  # TODO
-    return castlingRights
+def get_castling_rights(fen_castling):  # king side, queen side
+
+    if fen_castling == "-":
+        return ""
+
+    moves = []
+    if "K" in fen_castling:
+        moves.append("e1g1")
+        moves.append("h1f1")
+    if "Q" in fen_castling:
+        moves.append("e1c1")
+        moves.append("a1d1")
+    if "k" in fen_castling:
+        moves.append("e8g8")
+        moves.append("h8f8")
+    if "q" in fen_castling:
+        moves.append("e8c8")
+        moves.append("a8d8")
+
+    return moves
 
 
-def get_en_passant():  # TODO
-    return en_passant
+def get_en_passant(fen_en_passant):
+
+    if fen_en_passant == "-":
+        return ""
+
+    capturing_pawn = get_piece_from_position(fen_en_passant)
+
+    capture = []
+    if fen_en_passant[0] == "a":
+        capture.append("b" + fen_en_passant[1] + "a" + fen_en_passant[1])
+    elif fen_en_passant[0] == "h":
+        capture.append("g" + fen_en_passant[1] + "h" + fen_en_passant[1])
+    else:
+        capture.append(chr(ord(fen_en_passant[0]) - 1) + fen_en_passant[1] + fen_en_passant[0] + fen_en_passant[1])
+        capture.append(chr(ord(fen_en_passant[0]) + 1) + fen_en_passant[1] + fen_en_passant[0] + fen_en_passant[1])
+
+    return capture
 
 
 # endregion Game Logic
@@ -243,8 +272,8 @@ def get_previous_move(fen, add_move):
     return prev_move
 
 
-def get_next_move(fen):
-    next_move = find_next_move(fen)
+def get_next_move():
+    next_move = stockfish.get_best_move()
     listMoves.append(next_move)
     return next_move
 
@@ -287,12 +316,17 @@ def play_turn(fen):
 
     message = generate_message(fen, "")
 
-    move = get_next_move(fen)
-    full_move_number += 1
+    move = get_next_move()
     detect_promotion(move)
     removed_piece = update_list_pieces_from_move(move)
 
     piece_to_move = get_piece_from_position(move[0:2])
+
+    fen_parts = fen.split(" ")
+    # print(fen_parts[2] + " : " + fen_parts[3])
+    move = get_castling_rights(fen_parts[2])
+    full_move_number += len(move)
+    get_en_passant(fen_parts[3])
 
     return piece_to_move, move, removed_piece, message
 
@@ -302,9 +336,8 @@ def play_solo():
     fen = stockfish.get_fen_position()
     counter = 0
     delta_sum = 0
-    while (not is_game_over()):
-        if log_game:
-            start = datetime.datetime.now()
+    while not is_game_over():
+        start = datetime.datetime.now()
 
         counter += 1
         print("\tTurn " + str(counter))
@@ -314,11 +347,21 @@ def play_solo():
         fen = create_fen_from_list_pieces()
         stockfish.set_fen_position(fen)
 
+        delta = datetime.datetime.now() - start
+
+        # detect if the game is stuck
+        if delta.seconds > 60:
+            print("Game stuck")
+            break
+
+        # detect infinite loop
+        if delta < datetime.timedelta(seconds=0.001):
+            print("Infinite loop")
+            break
+
         if log_game:
             print(fen)
             print(stockfish.get_board_visual())
-
-            delta = datetime.datetime.now() - start
             delta_sum += delta.total_seconds()
             print("Time : " + str(delta.total_seconds()) + "s")
             mean_delta = delta_sum / counter
