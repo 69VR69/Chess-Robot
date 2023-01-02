@@ -1,4 +1,5 @@
 import datetime
+from typing import Tuple
 
 from stockfish import Stockfish
 
@@ -244,23 +245,19 @@ def get_castling_rights(fen_castling):  # king side, queen side
     return moves
 
 
-def get_en_passant(fen_en_passant):
-
-    if fen_en_passant == "-":
-        return ""
-
-    capturing_pawn = get_piece_from_position(fen_en_passant)
-
-    capture = []
-    if fen_en_passant[0] == "a":
-        capture.append("b" + fen_en_passant[1] + "a" + fen_en_passant[1])
-    elif fen_en_passant[0] == "h":
-        capture.append("g" + fen_en_passant[1] + "h" + fen_en_passant[1])
+def get_en_passant(fen_en_passant: str) -> Tuple[str, str]:
+    en_passant_square = fen_en_passant
+    if not en_passant_square or len(en_passant_square) < 2:
+        return '', ''
+    if en_passant_square[1] == '3':
+        en_passant_move = f"{en_passant_square[0]}2{en_passant_square[0]}3"
+        captured_pawn_position = f"{en_passant_square[0]}2"
+    elif en_passant_square[1] == '6':
+        en_passant_move = f"{en_passant_square[0]}7{en_passant_square[0]}6"
+        captured_pawn_position = f"{en_passant_square[0]}7"
     else:
-        capture.append(chr(ord(fen_en_passant[0]) - 1) + fen_en_passant[1] + fen_en_passant[0] + fen_en_passant[1])
-        capture.append(chr(ord(fen_en_passant[0]) + 1) + fen_en_passant[1] + fen_en_passant[0] + fen_en_passant[1])
-
-    return capture
+        return '', ''
+    return en_passant_move, captured_pawn_position
 
 
 # endregion Game Logic
@@ -323,10 +320,15 @@ def play_turn(fen):
     piece_to_move = get_piece_from_position(move[0:2])
 
     fen_parts = fen.split(" ")
-    # print(fen_parts[2] + " : " + fen_parts[3])
+
     move = get_castling_rights(fen_parts[2])
     full_move_number += len(move)
-    get_en_passant(fen_parts[3])
+
+    en_passant_move, captured_pawn_position = get_en_passant(fen_parts[3])
+    if captured_pawn_position != '':
+        removed_piece = captured_pawn_position
+    if en_passant_move != '':
+        move.append(en_passant_move)
 
     return piece_to_move, move, removed_piece, message
 
