@@ -376,7 +376,7 @@ def play_solo():
 if __name__ == '__main__':
     print('')
 
-    stockfish.set_elo_rating(2000)
+    stockfish.set_elo_rating(1200)
 
     # fen1 = "qbrkbnrn/pppppppp/8/8/8/8/PPPPPPPP/QBRKBNRN w - - 0 1"
     # fen2 = "qbrkbnrn/pppppppp/8/8/8/3P4/PPP1PPPP/QBRKBNRN b - - 0 1"
@@ -388,7 +388,7 @@ if __name__ == '__main__':
     # print(stockfish.get_board_visual())
 
     delta_sum = 0
-    log_game = False
+    log_game = True
 
     for i in range(0, 100):
         start = datetime.datetime.now()
@@ -406,3 +406,4 @@ if __name__ == '__main__':
         print("Mean time : " + str(mean_delta) + "s")
 
 # endregion test
+# TODO : handle mat (more than 3 same moves) + if only king it's equality
