@@ -1,29 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8e6aaf9b-d9c2-4605-a955-a735e9b71b1c" name="Changes" comment="test">
-      <change afterPath="$PROJECT_DIR$/Computer_Vision/board_detection/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Computer_Vision/board_detection/crop_image.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Computer_Vision/board_detection/debug.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Computer_Vision/board_detection/laps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Computer_Vision/board_detection/llr.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Computer_Vision/board_detection/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Computer_Vision/board_detection/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Computer_Vision/board_detection/slid.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Computer_Vision/board_detection/train.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Computer_Vision/board_detection/utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Computer_Vision/chess_recognition.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Computer_Vision/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Computer_Vision/pieces_recognition/build_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Computer_Vision/pieces_recognition/camera.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Computer_Vision/pieces_recognition/crop_image.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Computer_Vision/pieces_recognition/prepare.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Computer_Vision/pieces_recognition/prepare_dataset.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Computer_Vision/pieces_recognition/test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="8e6aaf9b-d9c2-4605-a955-a735e9b71b1c" name="Changes" comment="add pipeline and try to improve detection">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Computer Vision/TODO.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Computer_Vision/TODO.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,22 +44,27 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ddbtn/PycharmProjects/Chess-Robot/Computer_Vision/pieces_recognition&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ddbtn/PycharmProjects/Chess-Robot - Copie&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ddbtn\PycharmProjects\Chess-Robot\Computer_Vision\pieces_recognition" />
+      <recent name="C:\Users\ddbtn\PycharmProjects\Chess-Robot\Computer_Vision\pieces_recognition_" />
+      <recent name="C:\Users\ddbtn\PycharmProjects\Chess-Robot\Computer_Vision\ressources\dataset\validation3" />
+      <recent name="C:\Users\ddbtn\PycharmProjects\Chess-Robot\Computer_Vision\board_detection_" />
       <recent name="C:\Users\ddbtn\PycharmProjects\Chess-Robot\Computer_Vision\ressources\models" />
-      <recent name="C:\Users\ddbtn\PycharmProjects\Chess-Robot\Computer_Vision\ressources\png_model_stats" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ddbtn\PycharmProjects\Chess-Robot\Computer_Vision\pieces_recognition" />
+      <recent name="C:\Users\ddbtn\PycharmProjects\Chess-Robot\Computer_Vision" />
       <recent name="C:\Users\ddbtn\PycharmProjects\Chess-Robot\Computer Vision\ressources" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.test (1)">
-    <configuration name="build_model (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.main">
+    <configuration name="camera" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Chess-Robot" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -88,12 +72,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Computer_Vision/Github Project" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Computer_Vision/pieces_recognition" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Computer_Vision/Github Project/build_model.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Computer_Vision/pieces_recognition/camera.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -102,7 +86,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="build_model" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="fen_generator (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Chess-Robot" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -110,12 +94,34 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Computer Vision/Github Project" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Computer_Vision" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Computer Vision/Github Project/build_model.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Computer_Vision/fen_generator.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Chess-Robot" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Computer_Vision" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Computer_Vision/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -146,57 +152,35 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Chess-Robot" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Computer_Vision/Github Project" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Computer_Vision/Github Project/test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Python tests in camera.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests in main.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="Chess-Robot" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Computer_Vision/pieces_recognition" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Computer_Vision/board_detection" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/Computer_Vision/pieces_recognition/camera.py&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/Computer_Vision/board_detection/main.py&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.fen_generator (1)" />
+      <item itemvalue="Python.camera" />
       <item itemvalue="Python.test (1)" />
-      <item itemvalue="Python.build_model (1)" />
-      <item itemvalue="Python.test" />
-      <item itemvalue="Python.build_model" />
-      <item itemvalue="Python tests.Python tests in camera.py" />
+      <item itemvalue="Python tests.Python tests in main.py" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.test (1)" />
-        <item itemvalue="Python tests.Python tests in camera.py" />
-        <item itemvalue="Python.test" />
-        <item itemvalue="Python.build_model (1)" />
-        <item itemvalue="Python.build_model" />
+        <item itemvalue="Python tests.Python tests in main.py" />
+        <item itemvalue="Python.camera" />
+        <item itemvalue="Python.fen_generator (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -231,7 +215,19 @@
       <workItem from="1676032620787" duration="1784000" />
       <workItem from="1677971164379" duration="4439000" />
       <workItem from="1678032276456" duration="868000" />
-      <workItem from="1678051960520" duration="443000" />
+      <workItem from="1678051960520" duration="1225000" />
+      <workItem from="1678054401002" duration="8000" />
+      <workItem from="1678054537587" duration="316000" />
+      <workItem from="1678189952844" duration="3061000" />
+      <workItem from="1678232743446" duration="10733000" />
+      <workItem from="1678405848096" duration="81000" />
+      <workItem from="1678432235511" duration="4248000" />
+      <workItem from="1678556715132" duration="834000" />
+      <workItem from="1678779309025" duration="6191000" />
+      <workItem from="1680695660551" duration="23940000" />
+      <workItem from="1681059091519" duration="1266000" />
+      <workItem from="1681159594550" duration="85000" />
+      <workItem from="1681159795801" duration="1606000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1664205154491</created>
@@ -240,7 +236,28 @@
       <option name="project" value="LOCAL" />
       <updated>1664205154491</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="1e version CNN à peaufiner avec les 13 classes au lieu de 6 + projet board detection du projet github neural-chessboard">
+      <created>1678052698137</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1678052698137</updated>
+    </task>
+    <task id="LOCAL-00003" summary="clean">
+      <created>1681161045475</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1681161045475</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add pipeline and try to improve detection">
+      <created>1681161072509</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1681161072509</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -259,17 +276,24 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="add first version computer vision and recognition" />
+    <MESSAGE value="clean" />
+    <MESSAGE value="add pipeline and try to improve detection" />
+    <option name="LAST_COMMIT_MESSAGE" value="add pipeline and try to improve detection" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Chess_Robot$build_model__1_.coverage" NAME="build_model (1) Coverage Results" MODIFIED="1666812641281" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Computer_Vision/Github Project" />
-    <SUITE FILE_PATH="coverage/Chess_Robot$chess_recognition.coverage" NAME="main Coverage Results" MODIFIED="1664392943735" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Computer Vision" />
-    <SUITE FILE_PATH="coverage/Chess_Robot$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1677973094776" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Computer_Vision/pieces_recognition" />
-    <SUITE FILE_PATH="coverage/Chess_Robot$main.coverage" NAME="main Coverage Results" MODIFIED="1664398060025" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Computer Vision" />
+    <SUITE FILE_PATH="coverage/Chess_Robot$fen_generator.coverage" NAME="fen_generator Coverage Results" MODIFIED="1678779937542" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Computer_Vision" />
     <SUITE FILE_PATH="coverage/Chess_Robot$prepare_dataset.coverage" NAME="prepare_dataset Coverage Results" MODIFIED="1666738836438" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Computer Vision/Github Project" />
-    <SUITE FILE_PATH="coverage/Chess_Robot$build_model.coverage" NAME="build_model Coverage Results" MODIFIED="1666740730202" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Computer Vision/Github Project" />
+    <SUITE FILE_PATH="coverage/Chess_Robot$build_model.coverage" NAME="build_model Coverage Results" MODIFIED="1678233468105" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Computer_Vision/pieces_recognition" />
+    <SUITE FILE_PATH="coverage/Chess_Robot$main.coverage" NAME="main Coverage Results" MODIFIED="1680763954388" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Computer_Vision" />
+    <SUITE FILE_PATH="coverage/Chess_Robot$fen_generator__1_.coverage" NAME="fen_generator (1) Coverage Results" MODIFIED="1678784174057" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Computer_Vision" />
+    <SUITE FILE_PATH="coverage/Chess_Robot$crop_image.coverage" NAME="crop_image Coverage Results" MODIFIED="1678194762419" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Computer_Vision/board_detection" />
+    <SUITE FILE_PATH="coverage/Chess_Robot$.coverage" NAME=" Coverage Results" MODIFIED="1680697255821" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Computer_Vision/board_detection" />
+    <SUITE FILE_PATH="coverage/Chess_Robot$camera.coverage" NAME="camera Coverage Results" MODIFIED="1680696672035" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Computer_Vision/pieces_recognition" />
+    <SUITE FILE_PATH="coverage/Chess_Robot$chess_recognition.coverage" NAME="main Coverage Results" MODIFIED="1664392943735" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Computer Vision" />
+    <SUITE FILE_PATH="coverage/Chess_Robot$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1680697442784" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Computer_Vision/pieces_recognition" />
     <SUITE FILE_PATH="coverage/Chess_Robot$prepare.coverage" NAME="prepare Coverage Results" MODIFIED="1666738830928" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Computer Vision/Github Project" />
-    <SUITE FILE_PATH="coverage/Chess_Robot$.coverage" NAME=" Coverage Results" MODIFIED="1675675863932" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Computer_Vision/Github Project" />
     <SUITE FILE_PATH="coverage/Chess_Robot$test.coverage" NAME="test Coverage Results" MODIFIED="1666812855509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Computer_Vision/Github Project" />
   </component>
 </project>

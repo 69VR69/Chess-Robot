@@ -1,5 +1,4 @@
 import gc, os, sys, glob, argparse, utils
-from config import *
 from utils import ImageObject
 from slid import pSLID, SLID, slid_tendency  # == step 1
 from laps import LAPS  # == step 2
@@ -8,6 +7,7 @@ import numpy as np
 from keras import backend as K
 import cv2
 import time
+import config as config
 
 load = cv2.imread
 save = cv2.imwrite
@@ -17,7 +17,7 @@ POINTS = []
 
 def layer():
     global NC_LAYER, NC_IMAGE,POINTS  # , NC_SCORE
-    start = time()
+    # start = time()
     # --- 1 step --- find all possible lines (that makes sense) ----------------
     # print(utils.ribb(utils.head("SLID"), utils.clock(), "--- 1 step "))
     print("Etape 1")
@@ -47,8 +47,9 @@ def layer():
     try:
         NC_IMAGE.crop(four_points)
         POINTS = four_points
+        print("Done")
     except:
-        utils.warn("Erreur lors du crop")
+        # utils.warn("Erreur lors du crop")
         NC_IMAGE.crop(inner_points)
         POINTS = inner_points
     print("\n")
@@ -60,9 +61,17 @@ import re  # regex
 
 def detect(args):
     global NC_LAYER, NC_IMAGE, NC_CONFIG
-
+    NC_LAYER = config.NC_LAYER
+    NC_CONFIG = config.NC_CONFIG
+    NC_IMAGE = config.NC_IMAGE
+    # NC_LAYER =
+    # print("_______________________________________________________))")
+    # print(NC_CONFIG)
+    # NC_CONFIG = config.NC_CONFIG
+    # print(NC_CONFIG)
     if (not os.path.isfile(args)):
         utils.errn("error: the file \"%s\" does not exits" % args)
+        return
 
     NC_IMAGE, NC_LAYER = ImageObject(cv2.imread(args)), 0
     for _ in range(NC_CONFIG['layers']):
@@ -72,9 +81,11 @@ def detect(args):
     name = re.sub(r'.\w+$', '_cropped', args) + str(ext[0])
     cv2.imwrite(name, NC_IMAGE['orig'])
     # plot image
-    cv2.imshow('image', NC_IMAGE['orig'])
-    cv2.waitKey(0)
+    # cv2.imshow('image', NC_IMAGE['orig']) # todo : remove
+    # cv2.waitKey(0)
     print("DETECT: %s" % args)
+    # return path of cropped image
+    return name
 
 
 def test(args):

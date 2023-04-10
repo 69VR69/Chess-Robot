@@ -1,13 +1,20 @@
-import utils, debug, deps
 import collections
-import cv2, numpy as np
-import scipy, scipy.cluster
-from config import *
-
+import cv2
+import numpy as np
+import scipy
+import scipy.cluster
+# import h5py
 from keras.models import model_from_json
 
-__laps_model = 'data/models/laps.model.json'
-__laps_weights = 'data/models/laps.weights.h5'
+import debug
+import geometry
+import laps_ as laps
+import utils
+
+__laps_model = 'board_detection_/data/models/laps.model.json'
+__laps_weights = 'board_detection_/data/models/laps.weights.h5'
+# __laps_model = 'data/models/laps.model.json'
+# __laps_weights = 'data/models/laps.weights.h5'
 NC_LAPS_MODEL = model_from_json(open(__laps_model, 'r').read())
 NC_LAPS_MODEL.load_weights(__laps_weights)
 
@@ -21,7 +28,7 @@ NC_LAPS_MODEL.load_weights(__laps_weights)
 def laps_intersections(lines):
     """find all intersections"""
     __lines = [[(a[0], a[1]), (b[0], b[1])] for a, b in lines]
-    return deps.geometry.isect_segments(__lines)
+    return geometry.isect_segments(__lines)
 
 
 def laps_cluster(points, max_dist=10):
@@ -60,23 +67,17 @@ def laps_detector(img):
     mask = cv2.bitwise_not(mask);
     i = 0
 
-
-
-
     # print(cv2.findContours(mask, cv2.RETR_EXTERNAL,
     #                        cv2.CHAIN_APPROX_NONE)[0])
     # print("-------------------")
     # print(cv2.findContours(mask, cv2.RETR_EXTERNAL,
     #                        cv2.CHAIN_APPROX_NONE)[1])
 
-
-
-
     # _1, contours, _2 = cv2.findContours(mask, cv2.RETR_EXTERNAL,
     #                                     cv2.CHAIN_APPROX_NONE)
 
     contours, _2 = cv2.findContours(mask, cv2.RETR_EXTERNAL,
-                                        cv2.CHAIN_APPROX_NONE)
+                                    cv2.CHAIN_APPROX_NONE)
 
     _c = np.zeros((23, 23, 3), np.uint8)
 
