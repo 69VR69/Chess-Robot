@@ -3,16 +3,21 @@ import cv2
 import numpy as np
 import scipy
 import scipy.cluster
-# import h5py
+import h5py
 from keras.models import model_from_json
 
 import debug
 import geometry
 import laps_ as laps
 import utils
+import os
+project_path = os.getcwd()
+print (project_path)
+__laps_model = project_path + '/Computer_Vision/board_detection_/data/models/laps.model.json'
+__laps_weights = project_path + '/Computer_Vision/board_detection_/data/models/laps.weights.h5'
 
-__laps_model = 'board_detection_/data/models/laps.model.json'
-__laps_weights = 'board_detection_/data/models/laps.weights.h5'
+# __laps_model = 'board_detection_/data/models/laps.model.json'
+# __laps_weights = 'board_detection_/data/models/laps.weights.h5'
 # __laps_model = 'data/models/laps.model.json'
 # __laps_weights = 'data/models/laps.weights.h5'
 NC_LAPS_MODEL = model_from_json(open(__laps_model, 'r').read())

@@ -151,6 +151,6 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 /Computer_Vision/board_detection/data/train/laps/
-Chess Processor/.idea/misc.xml
-Chess Processor/.idea/Chess Processor.iml
-Chess Processor/.idea/misc.xml
+Chess_Processor/.idea/misc.xml
+Chess_Processor/.idea/Chess Processor.iml
+Chess_Processor/.idea/misc.xml
